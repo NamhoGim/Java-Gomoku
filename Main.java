@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * 오목 구현하기
  *
@@ -24,6 +26,19 @@
  */
 public class Main {
     public static void main(String[] args) {
-        // Play gomoku here
+        Gomoku gomoku = Gomoku.getInstance();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Put player1's name: ");
+        gomoku.setPlayer1(new Player());
+
+        System.out.println("Put player2's name: ");
+        gomoku.setPlayer2(new Player());
+
+        int i = 0;
+        while (!Gomoku.isQuit) {
+            Player currPlayer = ((i++ % Integer.MAX_VALUE) % 2 == 0) ? gomoku.getPlayer1() : gomoku.getPlayer2();
+            System.out.println(currPlayer.getName() + "'s turn:");
+            gomoku.play(currPlayer, new Position());
+        }
     }
 }
