@@ -14,6 +14,10 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     @Override
     public void play(Player player, Position pos) {
         player.getKeyboardInput();
+        if (Gomoku.isQuit) {
+            isFinished();
+            return;
+        }
         printStatus();
     }
 
@@ -50,7 +54,8 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
 
     @Override
     public void isFinished() {
-
+        System.out.println(player1.getName() + " " + player1.getNumWin() +
+                " - " + player2.getName() + " " + player2.getNumWin());
     }
 
     @Override
