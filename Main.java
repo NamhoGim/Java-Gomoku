@@ -27,12 +27,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Gomoku gomoku = Gomoku.getInstance();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Put player1's name: ");
-        gomoku.setPlayer1(new Player());
-
-        System.out.println("Put player2's name: ");
-        gomoku.setPlayer2(new Player());
+        gomoku.initialize();
+        gomoku.reset();
 
         int i = 0;
         while (!Gomoku.isQuit) {
