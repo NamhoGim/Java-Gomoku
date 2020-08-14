@@ -34,7 +34,7 @@ public class Main {
         while (!Gomoku.isQuit) {
             Player currPlayer = ((i++ % Integer.MAX_VALUE) % 2 == 0) ? gomoku.getPlayer1() : gomoku.getPlayer2();
             System.out.println(currPlayer.getName() + "'s turn:");
-            gomoku.play(currPlayer, new Position());
+            gomoku.play(currPlayer, Player.lastPos);
         }
     }
 }
