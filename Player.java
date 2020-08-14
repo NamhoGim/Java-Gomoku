@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Player implements Inputtable {
     private static Scanner scan = new Scanner(System.in);
+    static Position lastPos = new Position();
 
     private String name;
     private int numWin;
@@ -24,7 +25,7 @@ public class Player implements Inputtable {
     }
 
     public void setNumWin(int val) {
-        numWin = 0;
+        numWin = val;
     }
 
     @Override
@@ -62,6 +63,8 @@ public class Player implements Inputtable {
                     continue;
                 }
                 Gomoku.board[x][y] = (this == Gomoku.getInstance().getPlayer1()) ? 'O' : 'X';
+                lastPos.setX(x);
+                lastPos.setY(y);
             }
         }
     }
