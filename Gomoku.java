@@ -3,11 +3,14 @@ import java.util.List;
 
 public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     private static final Gomoku gomoku = new Gomoku();
+    private static final Position[] directions = new Position[]{new Position(0, -1), new Position(-1, -1),
+                                                                new Position(1, 0), new Position(-1, 1)};
+    private static final String[] pattern1 = new String[]{".OOO..", "..OOO.", ".O.OO.", ".OO.O."};
+    private static final String[] pattern2 = new String[]{".XXX..", "..XXX.", ".X.XX.", ".XX.X."};
 
     static boolean isQuit = false;
     static char[][] board = new char[15][15];
-    static private final Position[] directions = new Position[]{new Position(0, -1), new Position(-1, -1),
-                                                    new Position(1, 0), new Position(-1, 1)};
+
     private Player player1, player2;
 
     private Gomoku() {}
