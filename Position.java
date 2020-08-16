@@ -1,5 +1,6 @@
 public class Position {
     private int x, y;
+    private boolean blank;
 
     public Position() {
         this(0, 0);
@@ -21,5 +22,8 @@ public class Position {
     }
     public void setY(int y) {
         this.y = y;
+    }
+    public boolean isBlank() {
+        return blank;
     }
 }

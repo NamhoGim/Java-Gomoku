@@ -33,7 +33,7 @@ public class Main {
         int i = 0;
         while (!Gomoku.isQuit) {
             Player currPlayer = ((i++ % Integer.MAX_VALUE) % 2 == 0) ? gomoku.getPlayer1() : gomoku.getPlayer2();
-            System.out.println(currPlayer.getName() + "'s turn:");
+            System.out.println(currPlayer.getName() + "님의 차레 입니다.");
             gomoku.play(currPlayer, Player.lastPos);
         }
     }

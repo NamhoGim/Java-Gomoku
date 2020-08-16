@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class Player implements Inputtable {
-    private static Scanner scan = new Scanner(System.in);
+    private static final Scanner scan = new Scanner(System.in);
     static Position lastPos = new Position();
 
-    private String name;
+    private final String name;
     private int numWin;
 
     public Player() {
@@ -36,7 +36,7 @@ public class Player implements Inputtable {
         boolean isInvalid = false;
         while (!((x >= 0 && x < M) && (y >= 0 && y < N))) {
             if (isInvalid) {
-                System.out.println("Please put valid coordinate:");
+                System.out.println("가능한 위치가 아닙니다. 다시 입력해 주십시오.");
             }
             String line = scan.nextLine();
             String[] split = line.split(" ");
@@ -47,10 +47,10 @@ public class Player implements Inputtable {
                 if (split.length > 2) {
                     isInvalid = true;
                     continue;
-                } else if (split.length == 1 && !split[0].matches("[0-9]+")) {
+                } else if (split.length == 1) {
                     isInvalid = true;
                     continue;
-                } else if (split.length == 2 && (!split[0].matches("[0-9]+") || !split[1].matches("[0-9]+"))) {
+                } else if (!split[0].matches("[0-9]+") || !split[1].matches("[0-9]+")) {
                     isInvalid = true;
                     continue;
                 }
