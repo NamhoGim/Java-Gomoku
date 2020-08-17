@@ -4,6 +4,7 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     private static final Gomoku gomoku = new Gomoku();
     private static final Position[] directions = new Position[]{new Position(0, -1), new Position(-1, -1),
                                                                 new Position(-1, 0), new Position(1, -1)};
+
     private static final String[] pattern1 = new String[]{".OOO..", "..OOO.", ".O.OO.", ".OO.O."};
     private static final String[] pattern2 = new String[]{".XXX..", "..XXX.", ".X.XX.", ".XX.X."};
 
@@ -27,7 +28,7 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
             return;
         }
 
-        if (threeByThreeCondition()) {
+        if (threeByThreeCondition(pos)) {
             printStatus();
             System.out.println("33 입니다.");
 
@@ -142,19 +143,14 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
         return maxCount == 5;
     }
 
-    private boolean threeByThreeCondition() {
-        return false;
-    }
-
     private boolean threeByThreeCondition(Position currPos) {
         for (Position d1: directions) {
             HashSet<Position> set = getOpenThree(currPos, d1);
             if (set.size() == 0) {
                 continue;
             }
-            System.out.println("check!");
+
             for (Position pos : set) {
-                System.out.println(pos);
                 for (Position d2 : directions) {
                     if (d1.getX() != d2.getX() || d1.getY() != d2.getY()) {
                         if (isIncludedOpenThree(currPos, pos, d2)) {
@@ -208,78 +204,71 @@ public class Gomoku implements Simulatable, Winnable, Playable, Printable {
     }
 
     private Position patternMatch(Position pos, Position dir, String pattern, int i) {
-        Position result;
+        Position result = new Position();
         if (!pos.isBlank()) {
             switch (i) {
-                //case 0: // EAAAEE
-                //    for (int j = 1; j <= 3; j++) {
-                //        if (compareWithPattern(pos, dir, pattern, j)) {
-                //            System.out.println(pattern);
-                //            result.setX(pos.getX() + dir.getX() * (j - 1));
-                //            result.setY(pos.getY() + dir.getY() * (j - 1));
-                //            return result;
-                //        }
-                //    }
-                //    break;
+                case 0: // EAAAEE
+                    for (int j = 1; j <= 3; j++) {
+                        if (compareWithPattern(pos, dir, pattern, j)) {
+                            result.setX(pos.getX() + dir.getX() * (j - 1));
+                            result.setY(pos.getY() + dir.getY() * (j - 1));
+                            return result;
+                        }
+                    }
+                    break;
                 case 1: // EEAAAE
                     for (int j = 2; j <= 4; j++) {
                         if (compareWithPattern(pos, dir, pattern, j)) {
-                            result = new Position();
                             result.setX(pos.getX() + dir.getX() * (j - 2));
                             result.setY(pos.getY() + dir.getY() * (j - 2));
                             return result;
                         }
                     }
                     break;
-                //case 2: // EAEAAE
-                //    for (int j = 1; j <= 4; j++) {
-                //        if (j != 2 && compareWithPattern(pos, dir, pattern, j)) {
-                //            System.out.println(pattern);
-                //            result.setX(pos.getX() + dir.getX() * (j - 1));
-                //            result.setY(pos.getY() + dir.getY() * (j - 1));
-                //            return result;
-                //        }
-                //    }
-                //    break;
-                //case 3: // EAAEAE
-                //    for (int j = 1; j <= 4; j++) {
-                //        if (j != 3 && compareWithPattern(pos, dir, pattern, j)) {
-                //            System.out.println(pattern);
-                //            result.setX(pos.getX() + dir.getX() * (j - 1));
-                //            result.setY(pos.getY() + dir.getY() * (j - 1));
-                //            return result;
-                //        }
-                //    }
-                //    break;
+                case 2: // EAEAAE
+                    for (int j = 1; j <= 4; j++) {
+                        if (j != 2 && compareWithPattern(pos, dir, pattern, j)) {
+                            System.out.println(pattern);
+                            result.setX(pos.getX() + dir.getX() * (j - 1));
+                            result.setY(pos.getY() + dir.getY() * (j - 1));
+                            return result;
+                        }
+                    }
+                    break;
+                case 3: // EAAEAE
+                    for (int j = 1; j <= 4; j++) {
+                        if (j != 3 && compareWithPattern(pos, dir, pattern, j)) {
+                            System.out.println(pattern);
+                            result.setX(pos.getX() + dir.getX() * (j - 1));
+                            result.setY(pos.getY() + dir.getY() * (j - 1));
+                            return result;
+                        }
+                    }
+                    break;
             }
         }
-        //else {
-        //    if (i == 2 && compareWithPattern(pos, dir, pattern, 2)) {
-        //        System.out.println(pattern);
-        //        result.setX(pos.getX() + dir.getX());
-        //        result.setY(pos.getY() + dir.getY());
-        //        return result;
-        //    } else if (i == 3 && compareWithPattern(pos, dir, pattern, 3)) {
-        //        System.out.println(pattern);
-        //        result.setX(pos.getX() + dir.getX()*2);
-        //        result.setY(pos.getY() + dir.getY()*2);
-        //        return result;
-        //    }
-        //}
+        else {
+            if (i == 2 && compareWithPattern(pos, dir, pattern, 2)) {
+                result.setX(pos.getX() + dir.getX());
+                result.setY(pos.getY() + dir.getY());
+                return result;
+            } else if (i == 3 && compareWithPattern(pos, dir, pattern, 3)) {
+                result.setX(pos.getX() + dir.getX()*2);
+                result.setY(pos.getY() + dir.getY()*2);
+                return result;
+            }
+        }
         return null;
     }
 
     private boolean compareWithPattern(Position pos, Position dir, String pattern, int offset) {
-        System.out.println(pattern);
         int x = pos.getX(), y = pos.getY();
         int dx = dir.getX(), dy = dir.getY();
-        int cx = x + offset*dx, cy = y + offset*dy;
-        System.out.println("start: " + cx + ", " + cy);
-        for (int i = 0; boundaryCheck(cx, cy) && i < pattern.length(); cx -= dx, cy -= dy, i++) {
-            System.out.println(cx + ", " + cy + "," + board[cx][cy]);
+        int cx = x + offset*dx, cy = y + offset*dy, i;
+        for (i = 0; boundaryCheck(cx, cy) && i < pattern.length(); cx -= dx, cy -= dy, i++) {
             if (board[cx][cy] != pattern.charAt(i)) return false;
         }
-        return true;
+        return i == pattern.length();
     }
 
     private void addToSet(HashSet<Position> set, Position left, Position dir, int len) {
